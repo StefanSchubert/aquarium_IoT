@@ -10,7 +10,7 @@ will be able to display and analyse it via grafana.
 
 ## Rasperry Pi Setup
 
-![](https://raw.githubusercontent.com/StefanSchubert/Aquarium_IoT/master/assets/Components.png)
+![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Components.png)
 
 ### Base-Setup
 
