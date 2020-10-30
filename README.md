@@ -8,8 +8,9 @@ microservice in prometheus way.
 Thus a prometheus instance can collect the data and you
 will be able to display and analyse it via grafana.
 
-
 ## Rasperry Pi Setup
+
+![](https://raw.githubusercontent.com/StefanSchubert/Aquarium_IoT/master/assets/Components.png)
 
 ### Base-Setup
 
@@ -62,6 +63,12 @@ Install some additional packages
     # Java11 which is required to run our microservice
     sudo apt-get install openjdk-11-jre-headless
 
+Create a own user for our microservice
+
+    sudo adduser --home /var/aquametric --shell /usr/sbin/nologin aquametric
+
+choose an arbitrary password and name like "aqua computer" when prompted and leave the rest as default.
+
 Do a 
 
     sudo shutdown -r now
@@ -73,7 +80,44 @@ you provided via raspi-config.
 
 ### Build and deploy the microservice on the pi
 
-(todo)
+#### Build steps
+
+Easy - to build the project you need java 11 and maven.
+do a 
+
+    mvn clean package 
+
+and keep the target/aquametric-1.0-SNAPSHOT.jar
+
+#### Deploy the version onto the pi via ansible
+
+The deployment via ansible on single rasperry-pi's is like using a sledgehammer to crack a nut,
+it is unsuitable here but I had it already a blueprint so it was easy to adopt.
+
+##### Preconditions to use this deployment procedure
+
+* Ansible and ssh are available
+* The ssh private key of the executing user has been published onto the 'pi' account.
+
+###### Examples
+
+_Execute something on all pis_
+
+	ansible aquapis -i hosts -u pi -a "/bin/uname -a"
+
+or check the unattended update logs
+
+	ansible aquapis -i hosts -u pi -a "tail -n20 /var/log/unattended-upgrades/unattended-upgrades.log"
+
+
+##### Deployment
+
+Build the new aquametrics release and then from the ansible dir
+
+    ansible-playbook -i hosts deployAquaMetricsService.yml
+
+wait 2 min and then do the endpoint test. Your service should be up and running and
+do so even after restart.
 
 ## Sensor-Endpoints
 
@@ -90,9 +134,18 @@ using spring-boot.
 
 Tell your microservice which file to use to access your sensor
 
-    application.properties
-    bal bla
+##### application.properties
 
-curl http://localhost:8080/sensor/temp/ds18b20
-Implement me :-)%
+    # Each sensor has it's own device ID. You will find it as sub-folder here: /sys/bus/w1/devices
+    ds18b20.device.id=28-0319a2795781
 
+##### Endpoint test 
+
+    curl http://localhost:8080/sensor/temp/ds18b20
+    
+    # Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0,000000
+    aqua_measure_celsius{sensor="28-0319a2795781"} 21,062000 515908000
+    # duration of measurement in millis
+    aqua_measure_duration{sensor="28-0319a2795781"} 3
+
+That's it :-) time to add it to your prometheus scrape config (don't forget to relace the localhost)

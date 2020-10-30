@@ -1,0 +1,13 @@
+[Unit]
+Description=Aquametrics Service
+Documentation=https://github.com/StefanSchubert/aquarium_IoT
+After=network-online.target
+
+[Service]
+User=aquametric
+Restart=on-failure
+
+ExecStart=/var/aquametric/aquametric-service.jar
+
+[Install]
+WantedBy=multi-user.target

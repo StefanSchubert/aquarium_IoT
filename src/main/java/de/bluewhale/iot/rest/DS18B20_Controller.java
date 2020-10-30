@@ -61,6 +61,7 @@ public class DS18B20_Controller {
                     else if (line.matches(".*t=[0-9-]+") && selfcheckPassed)
                         temperatureInCelcius = Integer.valueOf(line.substring(line.indexOf("=") + 1)) / 1000.0;
                 }
+                break;
             } catch (Exception e) {
                 log.error("Sensor readout failed on " + circuitBreaker + ". attempt. Reason: {}",e.getCause());
                 // sensor value will stick to 0 if we are not successful in the end.
@@ -73,7 +74,7 @@ public class DS18B20_Controller {
         log.info(String.format("Temperature readout: %s °C in %d ms having %d attempts.",
                 temperatureInCelcius, measureRequestElapsedTimeInMS, circuitBreaker--));
 
-        String response1 = String.format("# Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0,000000\n" +
+        String response1 = String.format("# Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0.000000\n" +
                 "aqua_measure_celsius{sensor=\"%s\"} %f %d\n", sensorDevice, temperatureInCelcius, measureTaken.getNano());
         String response2 = String.format("# duration of measurement in millis\n" +
                 "aqua_measure_duration{sensor=\"%s\"} %d\n", sensorDevice, measureRequestElapsedTimeInMS);

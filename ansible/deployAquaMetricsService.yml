@@ -1,0 +1,53 @@
+- hosts: aquapis
+  vars_files:
+    - ./group_vars/atlantis.yml
+  tasks:
+    - name: Create aquametric directory
+      file:
+        path: /var/aquametric
+        state: directory
+        owner: aquametric
+        group: aquametric
+    - name: Create aquametric config directory
+      file:
+        path: /var/aquametric/config
+        state: directory
+        owner: aquametric
+        group: aquametric
+    - name: Copy systemd service file to server
+      copy:
+        src: aquametric.service
+        dest: /etc/systemd/system
+        owner: root
+        group: root
+    - name: Copy new jar file
+      copy:
+        src: ../target/aquametric-service.jar
+        dest: /var/aquametric
+        owner: aquametric
+        group: aquametric
+        mode: '0740'
+    - name: Copy JVM config file
+      copy:
+        src: ../aquametric-service.conf
+        dest: /var/aquametric
+        owner: aquametric
+        group: aquametric
+        mode: '0644'
+    - name: Copy Application config file
+      copy:
+        src: application.properties
+        dest: /var/aquametric/config
+        owner: aquametric
+        group: aquametric
+        mode: '0640'
+    - name: Enable service aquametric and ensure it is not masked
+      systemd:
+        name: aquametric
+        enabled: yes
+        masked: no
+      async: 120
+    - name: Start aquametric service
+      systemd:
+        name: aquametric
+        state: restarted

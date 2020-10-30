@@ -1,0 +1,17 @@
+@startuml
+
+package "atlantis (a raspberrypi)" as pi {
+HTTP - [aquametric-service] : port 8080
+}
+
+stack fishtank {
+    boundary DS18B20 as sensor
+}
+
+pi -d-> sensor : wired
+
+cloud Somewhere {
+    [prometheus] --> [HTTP] : scrape values
+}
+
+@enduml
