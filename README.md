@@ -79,6 +79,20 @@ you provided via raspi-config.
 
 ### DS18B20 Temperatur Sensor
 
+I built the pi DS18B20 circuit following e.g. http://tuxgraphics.org/npa/raspberry-pi-ds18s20-temperature-sensor/
+The test readout must be working before continuing.
+
+Above tutorial uses some perl programming, which seems quite effective.
+But as I'm familiar with java I choosed to write a small java microservice
+using spring-boot.  
+
+#### Configuration
+
+Tell your microservice which file to use to access your sensor
+
+    application.properties
+    bal bla
+
 curl http://localhost:8080/sensor/temp/ds18b20
 Implement me :-)%
 
