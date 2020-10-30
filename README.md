@@ -15,7 +15,7 @@ will be able to display and analyse it via grafana.
 ### Base-Setup
 
 Burn a SD Card (16GB) with the latest Raspbian (CLI-Edition, no Desktop)
-Connect the pi to a lan cable (only temorary), hdmi, keyboard
+Connect the pi to a lan cable (only temporarily), hdmi, keyboard
 
 * Connect to atlantis with default credentials (pi/raspberry)
 * sudo raspi-config
@@ -134,7 +134,12 @@ using spring-boot.
 
 Tell your microservice which file to use to access your sensor
 
-##### application.properties
+##### Edit application.properties
+
+Notice the file exists twice
+
+ansible/application.properties is the one wich will be used on the pi 
+src/main/resources/application.properties will be taken on local deployment in you IDE.
 
     # Each sensor has it's own device ID. You will find it as sub-folder here: /sys/bus/w1/devices
     ds18b20.device.id=28-0319a2795781
