@@ -153,4 +153,4 @@ src/main/resources/application.properties will be taken on local deployment in y
     # duration of measurement in millis
     aqua_measure_duration{sensor="28-0319a2795781"} 3
 
-That's it :-) time to add it to your prometheus scrape config (don't forget to relace the localhost)
+That's it :-) time to add it to your prometheus scrape config (don't forget to replace the localhost)

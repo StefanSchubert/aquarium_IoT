@@ -8,8 +8,8 @@
         </Console>
 
         <RollingFile name="RollingFile"
-                     fileName="./logs/spring-boot-logger-log4j2.log"
-                     filePattern="./logs/$${date:yyyy-MM}/spring-boot-logger-log4j2-%d{-dd-MMMM-yyyy}-%i.log.gz">
+                     fileName="./logs/aquametric-service.log"
+                     filePattern="./logs/$${date:yyyy-MM}/aquametric-service-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout>
                 <pattern>%d %p %C{1.} [%t] %m%n</pattern>
             </PatternLayout>
@@ -21,6 +21,8 @@
                         size="10 MB" />
                 <TimeBasedTriggeringPolicy />
             </Policies>
+            <!-- keep only last 14 files -->
+            <DefaultRolloverStrategy max="14" />
         </RollingFile>
     </Appenders>
 
