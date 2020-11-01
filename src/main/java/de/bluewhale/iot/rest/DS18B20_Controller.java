@@ -50,7 +50,7 @@ public class DS18B20_Controller {
         boolean selfcheckPassed = false;
 
         // Just in case the sensor wasn't ready for some reasons we make 4 repeated readout attempts.
-        // A single readout on this sensor type lasts usally <2secs.
+        // A single readout of this sensor type usually lasts approximately a second.
         Instant start = Instant.now();
         while (circuitBreaker <= 4) {
             try {
@@ -75,7 +75,7 @@ public class DS18B20_Controller {
                 temperatureInCelcius, measureRequestElapsedTimeInMS, circuitBreaker--));
 
         String response1 = String.format("# Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0.000000\n" +
-                "aqua_measure_celsius{sensor=\"%s\"} %f %d\n", sensorDevice, temperatureInCelcius, measureTaken.getNano());
+                "aqua_measure_celsius{sensor=\"%s\"} %s %d\n", sensorDevice, temperatureInCelcius, measureTaken.getNano());
         String response2 = String.format("# duration of measurement in millis\n" +
                 "aqua_measure_duration{sensor=\"%s\"} %d\n", sensorDevice, measureRequestElapsedTimeInMS);
 

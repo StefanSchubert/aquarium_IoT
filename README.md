@@ -153,4 +153,27 @@ src/main/resources/application.properties will be taken on local deployment in y
     # duration of measurement in millis
     aqua_measure_duration{sensor="28-0319a2795781"} 3
 
-That's it :-) time to add it to your prometheus scrape config (don't forget to replace the localhost)
+That's it :-) 
+
+##### Prometheus / Grafana Config
+
+Setting up of Prometheus/Grafana is not covered in this project. I assume you have
+it already up and running, you may find my config helpful for integration.
+
+###### Scrape-Config Prometheus
+
+      # Atlantis aquametrics
+      - job_name: 'aquametrics'
+        metrics_path: '/sensor/temp/ds18b20'
+        scrape_interval: 120s
+        static_configs:
+          - targets: ['atlantis:8080']
+            labels:
+              sensor: 'ds18b20'
+
+###### Sample Grafana Board
+
+
+
+
+
