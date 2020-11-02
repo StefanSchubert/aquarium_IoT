@@ -8,6 +8,9 @@ microservice in prometheus way.
 Thus a prometheus instance can collect the data and you
 will be able to display and analyse it via grafana.
 
+**WARNING:** Having open electric circuits near saltwater can be potentially dangerous. Do not follow this setup unless you are experienced with this type
+of work and know what you are doing and how to secure your setup. Meaning I take no responsibility or liability of your work.
+
 ## Rasperry Pi Setup
 
 ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Components.png)
@@ -15,9 +18,9 @@ will be able to display and analyse it via grafana.
 
 | Preview | Remark |
 |---|---|
-| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_Top.png) | As I'm not sure how my sensor will react to the seawater it might be that I need to replace it after a while so I choosed not to solder the wires onto the board and use the blue screw thing which makes it easy. |
-| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_Bottom.png) | My first soldering work after 20 years. Please don't blame me. I choosed to leave a spare lane between to connected ones, as it all was so tight an I didn't trues my soldering capabilities.|
-| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Finished.png) | This is the result meanwhile up and running. |
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_Top.png) | I'm not sure how my sensor will react to the seawater. It might be that I need to replace it after a while so I choosed not to solder the wires onto the board and use the blue screw thing which makes it easy to mount a new one. |
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_Bottom.png) | My first soldering work after 20 years. Please don't blame me. I choosed to leave a spare lane between to connected ones, as I didn't trusted my soldering capabilities.|
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Finished.png) | This is the result. Meanwhile up and running :-) |
 | ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/grafanaBoard.png) | And this is what it looks like with a simple grafana board displaying the values. By the way I'm using grafana to **set threshhold and email alerting**. | 
 
 
