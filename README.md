@@ -12,6 +12,15 @@ will be able to display and analyse it via grafana.
 
 ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Components.png)
 
+
+| Preview | Remark |
+|---|---|
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_top.png) | As I'm not sure how my sensor will react to the salt water and it might be that I need to replace it after a while -I choosed not to solder the wires onto the board and use the blue screw thing which makes it easy. |
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Board_Bottom.png) | My first soldering work after 20 years. Please don't blame me. I choosed to leave a spare lane between to connected ones, as it all was so tight an I didn't trues my soldering capabilities.|
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Finished.png) | This is the result meanwhile up and running. |
+| ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/grafanaBoard.png) | And this is what it looks like with a simple grafana board displaying the values. By the way I'm using grafana to **set threshhold and email alerting**. | 
+
+
 ### Base-Setup
 
 Burn a SD Card (16GB) with the latest Raspbian (CLI-Edition, no Desktop)
