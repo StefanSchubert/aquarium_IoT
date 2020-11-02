@@ -74,8 +74,8 @@ public class DS18B20_Controller {
         log.info(String.format("Temperature readout: %s °C in %d ms having %d attempts.",
                 temperatureInCelcius, measureRequestElapsedTimeInMS, circuitBreaker--));
 
-        String response1 = String.format("# Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0.000000\n" +
-                "aqua_measure_celsius{sensor=\"%s\"} %s %d\n", sensorDevice, temperatureInCelcius, measureTaken.getNano());
+        String response1 = String.format("# Temperature in celsius (in case of access errors celsius will be 0.0)\n" +
+                "aqua_measure_celsius{sensor=\"%s\"} %s\n", sensorDevice, temperatureInCelcius);
         String response2 = String.format("# duration of measurement in millis\n" +
                 "aqua_measure_duration{sensor=\"%s\"} %d\n", sensorDevice, measureRequestElapsedTimeInMS);
 

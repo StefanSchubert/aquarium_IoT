@@ -148,8 +148,8 @@ src/main/resources/application.properties will be taken on local deployment in y
 
     curl http://localhost:8080/sensor/temp/ds18b20
     
-    # Temperature in celsius and duration in nanos in case of access errors celsius will be exact 0,000000
-    aqua_measure_celsius{sensor="28-0319a2795781"} 21,062000 515908000
+    # Temperature in celsius (will be exact 0.0 in case of errors)
+    aqua_measure_celsius{sensor="28-0319a2795781"} 21.062
     # duration of measurement in millis
     aqua_measure_duration{sensor="28-0319a2795781"} 3
 
@@ -159,13 +159,15 @@ That's it :-)
 
 Setting up of Prometheus/Grafana is not covered in this project. I assume you have
 it already up and running, you may find my config helpful for integration.
+As the temperature won't change so fast, a scrape interval of
+5 mins should be sufficient.
 
 ###### Scrape-Config Prometheus
 
       # Atlantis aquametrics
       - job_name: 'aquametrics'
         metrics_path: '/sensor/temp/ds18b20'
-        scrape_interval: 120s
+        scrape_interval: 300s
         static_configs:
           - targets: ['atlantis:8080']
             labels:
@@ -173,7 +175,10 @@ it already up and running, you may find my config helpful for integration.
 
 ###### Sample Grafana Board
 
+Simple copy paste this as json export to got a simple dashboard 
+for the sensor: assets/grafanaBoard.json
 
+ 
 
 
 
