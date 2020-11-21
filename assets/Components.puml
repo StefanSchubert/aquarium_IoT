@@ -1,7 +1,8 @@
 @startuml
 
 package "atlantis (a raspberrypi)" as pi {
-HTTP - [aquametric-service] : port 8080
+interface HTTP as http1
+http1 - [aquametric-service] : port 8080
 }
 
 stack fishtank {
@@ -11,7 +12,12 @@ stack fishtank {
 pi -d-> sensor : wired
 
 cloud Somewhere {
-    [prometheus] --> [HTTP] : scrape values
+    interface HTTP as http2
+    [prometheus] --> http1 : scrape values
+    [grafana] -l-> [prometheus]
+    [grafana] - http2 : port 8080
 }
+ actor Me
+ Me --> http2 : Web-\nbrowser
 
 @enduml
