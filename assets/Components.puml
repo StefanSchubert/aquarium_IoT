@@ -17,7 +17,7 @@ cloud Somewhere {
     [grafana] -l-> [prometheus]
     [grafana] - http2 : port 8080
 }
- actor Me
- Me --> http2 : Web-\nbrowser
+ actor You
+ You --> http2 : Web-\nbrowser
 
 @enduml
