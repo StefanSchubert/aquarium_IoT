@@ -8,13 +8,13 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>2.4.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>de.bluewhale.iot</groupId>
     <artifactId>AquaMetrics</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <description>
@@ -43,6 +43,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
+        <micrometer.prometheus.version>1.6.4</micrometer.prometheus.version>
     </properties>
 
     <dependencies>
@@ -69,13 +70,30 @@
             <artifactId>spring-context</artifactId>
         </dependency>
 
-        
+
         <!-- Common Stuff -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- Monitoring
+     The next ones are required for providing
+     http://host:port/actuator/prometheus
+-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+        <!-- Micrometer Prometheus registry  -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.prometheus.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
