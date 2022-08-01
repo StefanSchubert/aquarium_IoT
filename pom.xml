@@ -8,13 +8,13 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
+        <version>2.7.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>de.bluewhale.iot</groupId>
     <artifactId>AquaMetrics</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <packaging>jar</packaging>
     <description>
@@ -43,7 +43,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <micrometer.prometheus.version>1.6.4</micrometer.prometheus.version>
+        <lombok.version>1.18.24</lombok.version>
+        <micrometer.prometheus.version>1.10.0-M3</micrometer.prometheus.version>
+        <owasp.plugin.version>7.1.1</owasp.plugin.version>
+        <maven.versions.plugin.version>2.11.0</maven.versions.plugin.version>
     </properties>
 
     <dependencies>
@@ -75,7 +78,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>${lombok.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -123,7 +126,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <release>${java.version}</release>
                     <encoding>UTF-8</encoding>
@@ -138,6 +140,39 @@
                     -->
                     <executable>true</executable>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- Used for vulnerability checks
+                 The examples below can be executed using mvn verify.
+                 -->
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${owasp.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- This will check for newer version on dependencies which are
+                     controlled by version property variables -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${maven.versions.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <!--                            <goal>display-dependency-updates</goal>-->
+                            <!--                            <goal>display-plugin-updates</goal>-->
+                            <goal>display-property-updates</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

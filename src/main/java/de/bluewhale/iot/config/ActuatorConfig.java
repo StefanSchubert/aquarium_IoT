@@ -6,8 +6,6 @@
 package de.bluewhale.iot.config;
 
 import de.bluewhale.iot.pi.PisCPUTemperatureProbe;
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -22,8 +20,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActuatorConfig {
 
-    @Autowired
-    MeterRegistry meterRegistry;
+//    @Autowired
+//    MeterRegistry meterRegistry;
 
     @Bean
     PisCPUTemperatureProbe pisCPUTemperatureProbe() {

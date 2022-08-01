@@ -1,0 +1,6 @@
+### A Sample Query
+
+GET http://{{host}}:{{port}}/sensor/temp/ds18b20
+Accept: text/plain
+
+###
