@@ -1,16 +1,13 @@
 /*
- * Copyright (c) 2020 by Stefan Schubert under the MIT License (MIT).
+ * Copyright (c) 2022 by Stefan Schubert under the MIT License (MIT).
  * See project LICENSE file for the detailed terms and conditions.
  */
 
-package de.bluewhale.iot.rest;
+package de.bluewhale.iot.adapter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -19,15 +16,14 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "sensor/temp")
+@Service
 @Slf4j
 /**
- * This controller attempts to access a DS1B20 sensor, reads the temperature and provides it as prometheus gauge-style value.
+ * This class attempts to access a DS1B20 sensor, reads the temperature and provides it as prometheus gauge-style value.
  * Needs your rasperry pi and sensor up and running (see Readme.md) and the corresponding deviceID written in the
  * application.properties.
  */
-public class DS18B20_Controller {
+public class DS18B20_Device {
 
     private static final String POSITIVE_CRC_FLAG = "YES";
     private static final String DEVICE_PATH = "/sys/bus/w1/devices";
@@ -36,22 +32,40 @@ public class DS18B20_Controller {
     @Value("${ds18b20.device.id}")
     String sensorDevice;
 
-    @RequestMapping(value = "/ds18b20", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public ResponseEntity<String> howWarmIsIt() {
+    public String getTemperatureMeasurementInPrometheusStyle() {
 
         Path path = FileSystems.getDefault().getPath(DEVICE_PATH, sensorDevice, VALUE_READOUT_FILE);
 
         double temperatureInCelcius = 0;
         long measureRequestElapsedTimeInMS;
+
+        Instant start = Instant.now();
+        temperatureInCelcius = getConreateTemperatueValueInCelsius();
+        Instant measureTaken = Instant.now();
+        measureRequestElapsedTimeInMS = Duration.between(start, measureTaken).toMillis();
+
+        String response1 = String.format("# Temperature in celsius (in case of access errors celsius will be 0.0)\n" +
+                "aqua_measure_celsius{sensor=\"%s\"} %s\n", sensorDevice, temperatureInCelcius);
+        String response2 = String.format("# duration of measurement in millis\n" +
+                "aqua_measure_duration{sensor=\"%s\"} %d\n", sensorDevice, measureRequestElapsedTimeInMS);
+
+        return response1+response2;
+    }
+
+    /**
+     * Reads the temperature
+     * @return current temperature Reading in celsius or null if device was inaccessible
+     */
+    public Double getConreateTemperatueValueInCelsius() {
+
         List<String> lines;
-        int circuitBreaker = 1;
+        Path path = FileSystems.getDefault().getPath(DEVICE_PATH, sensorDevice, VALUE_READOUT_FILE);
         boolean selfcheckPassed = false;
+        int circuitBreaker = 1;
+        double temperatureInCelcius = 0;
 
         // Just in case the sensor wasn't ready for some reasons we make 4 repeated readout attempts.
         // A single readout of this sensor type usually lasts approximately a second.
-        Instant start = Instant.now();
         while (circuitBreaker <= 4) {
             try {
                 lines = Files.readAllLines(path);
@@ -68,18 +82,10 @@ public class DS18B20_Controller {
             }
             circuitBreaker++;
         }
-        Instant measureTaken = Instant.now();
-        measureRequestElapsedTimeInMS = Duration.between(start, measureTaken).toMillis();
 
-        log.info(String.format("Temperature readout: %s °C in %d ms having %d attempts.",
-                temperatureInCelcius, measureRequestElapsedTimeInMS, circuitBreaker--));
+        log.debug(String.format("Temperature readout: %s °C having %d attempts.",
+                temperatureInCelcius, circuitBreaker--));
 
-        String response1 = String.format("# Temperature in celsius (in case of access errors celsius will be 0.0)\n" +
-                "aqua_measure_celsius{sensor=\"%s\"} %s\n", sensorDevice, temperatureInCelcius);
-        String response2 = String.format("# duration of measurement in millis\n" +
-                "aqua_measure_duration{sensor=\"%s\"} %d\n", sensorDevice, measureRequestElapsedTimeInMS);
-
-        return new ResponseEntity<>(response1+response2, HttpStatus.OK);
+        return temperatureInCelcius;
     }
-
 }

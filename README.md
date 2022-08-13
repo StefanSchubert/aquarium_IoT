@@ -110,6 +110,7 @@ it is unsuitable here but I had it already a blueprint so it was easy to adopt.
 
 * Ansible and ssh are available
 * The ssh private key of the executing user has been published onto the 'pi' account.
+* You have edited the application.properties value for "ds18b20.device.id"
 
 ###### Examples
 
@@ -125,6 +126,10 @@ or check the unattended update logs
 ##### Deployment
 
 Build the new aquametrics release and then from the ansible dir
+
+(For your local copy only: edit deployAquaMetricsService.yml lookup the section with application.properties
+and uncomment the section to become active. I have spared the section out, because I won't share
+my sabi ApiKey with the world, by checking the value back in github).
 
     ansible-playbook -i hosts deployAquaMetricsService.yml
 

@@ -2,7 +2,7 @@
   vars_files:
     - ./group_vars/atlantis.yml
   tasks:
-    - name: Adding existing user "aquametric" to group video for beeing able to use vcgencmd
+    - name: Adding existing user "aquametric" to group video for being able to use vcgencmd
       user:
         name: aquametric
         groups: video
@@ -39,13 +39,14 @@
         owner: aquametric
         group: aquametric
         mode: '0644'
-    - name: Copy Application config file
-      copy:
-        src: application.properties
-        dest: /var/aquametric/config
-        owner: aquametric
-        group: aquametric
-        mode: '0640'
+#  Not for my personal production as it contains API-KEY secret.
+#    - name: Copy Application config file
+#      copy:
+#        src: application.properties
+#        dest: /var/aquametric/config
+#        owner: aquametric
+#        group: aquametric
+#        mode: '0640'
     - name: Enable service aquametric and ensure it is not masked
       systemd:
         name: aquametric

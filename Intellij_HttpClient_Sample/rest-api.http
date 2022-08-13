@@ -3,4 +3,11 @@
 GET http://{{host}}:{{port}}/sensor/temp/ds18b20
 Accept: text/plain
 
-###
+### Probe Sabi API Key (please use real measurements when talking to productive sabi
+POST http://{{host}}:{{port}}/sabi/api/aquarium_iot/temp_measurement
+Content-Type: application/json
+
+{
+  "measuredValueInCelsius": 26.4,
+  "apiKey": "PLACE YOUR APIKEY IN THERE"
+}
