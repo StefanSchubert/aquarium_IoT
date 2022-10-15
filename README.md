@@ -136,15 +136,21 @@ my sabi ApiKey with the world, by checking the value back in github).
 wait 2 min and then do the endpoint test. Your service should be up and running and
 do so even after restart.
 
-## Sensor-Endpoints
+## Sensor-Endpoint
 
 ### DS18B20 Temperatur Sensor
 
-I built the pi DS18B20 circuit following e.g. http://tuxgraphics.org/npa/raspberry-pi-ds18s20-temperature-sensor/
-The test readout must be working before continuing.
+You may follow my circuit board layout for the soldering work,
+but you are free to use your own design for the wiring with
+the material available ;-)
+![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/DS18B20CircuitBoardLayout.png)
+
+I built the pi DS18B20 circuit board layout following 
+the wiring schema as seen from the tutorial here: http://tuxgraphics.org/npa/raspberry-pi-ds18s20-temperature-sensor/
+The test readout from the tutoral mentioned above should be working before continuing.
 
 Above tutorial uses some perl programming, which seems quite effective.
-But as I'm familiar with java I choosed to write a small java microservice
+Being familiar with java I chosed to write a small java microservice
 using spring-boot.  
 
 #### Configuration
