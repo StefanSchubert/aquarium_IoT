@@ -30,13 +30,15 @@ Burn a SD Card (16GB) with the latest Raspbian (CLI-Edition, no Desktop)
 Connect the pi to a lan cable (only temporarily), hdmi, keyboard
 
 * Connect to atlantis with default credentials (pi/raspberry)
-* sudo raspi-config
-    * Choose a hostname (for this sample atlantis)
-    * Change login credentials
-    * Activate SSH network service
-    * Configure locale, keyboard, timezone 
-    * Configure WLAN
-    * In advance setup: activate the 1-wire protocol
+
+      sudo raspi-config
+  
+  * Choose a hostname (for this sample atlantis)
+  * Change login credentials
+  * Activate SSH network service
+  * Configure locale, keyboard, timezone 
+  * Configure WLAN
+  * In Interface Options: activate the 1-wire protocol
     
 Upgrade the system 
 
@@ -72,8 +74,8 @@ Install some additional packages
     # and that your local user can read them on the console using mutt
     sudo apt-get install mutt
      
-    # Java11 which is required to run our microservice
-    sudo apt-get install openjdk-11-jre-headless
+    # Java17 which is required to run our microservice
+    sudo apt-get install openjdk-17-jre-headless
 
 Create a own user for our microservice
 
