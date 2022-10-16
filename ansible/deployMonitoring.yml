@@ -69,16 +69,16 @@
         state: directory
         owner: prometheus
         group: prometheus
-    - name: Fetch prometheus version 2.36.1
-      command: wget https://github.com/prometheus/prometheus/releases/download/v2.36.1/prometheus-2.36.1.linux-armv7.tar.gz
+    - name: Fetch prometheus version 2.39.1
+      command: wget https://github.com/prometheus/prometheus/releases/download/v2.39.1/prometheus-2.39.1.linux-armv7.tar.gz
       args:
         chdir: /var/prometheus
     - name: Unpack prometheus version
-      command: tar -xzf prometheus-2.36.1.linux-armv7.tar.gz --strip-components=1
+      command: tar -xzf prometheus-2.39.1.linux-armv7.tar.gz --strip-components=1
       args:
         chdir: /var/prometheus
     - name: Cleanup old files
-      file: path=/var/prometheus/prometheus-2.36.1.linux-armv7.tar.gz state=absent
+      file: path=/var/prometheus/prometheus-2.39.1.linux-armv7.tar.gz state=absent
     - name: Copy last secured configuration
       copy:
         src: prometheus.yml
@@ -144,13 +144,6 @@
       copy:
         src: grafana/custom.ini
         dest: /var/grafana/conf
-        owner: grafana
-        group: grafana
-        mode: '0640'
-    - name: Copy last database backup
-      copy:
-        src: grafana/grafana.db
-        dest: /var/grafana/data
         owner: grafana
         group: grafana
         mode: '0640'
