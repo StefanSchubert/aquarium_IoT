@@ -113,6 +113,7 @@ it is unsuitable here but I had it already a blueprint so it was easy to adopt.
 * Ansible and ssh are available
 * The ssh private key of the executing user has been published onto the 'pi' account.
 * You have edited the application.properties value for "ds18b20.device.id"
+* You have edited the ansible/hosts file containing the hostname of yor target pi (if you changed it) 
 
 ###### Examples
 
@@ -125,9 +126,10 @@ or check the unattended update logs
 	ansible aquapis -i hosts -u pi -a "tail -n20 /var/log/unattended-upgrades/unattended-upgrades.log"
 
 
-##### Deployment
+##### Deployment of Monitoring Endpoint
 
 Build the new aquametrics release and then from the ansible dir
+
 
 (For your local copy only: edit deployAquaMetricsService.yml lookup the section with application.properties
 and uncomment the section to become active. I have spared the section out, because I won't share
@@ -137,6 +139,17 @@ my sabi ApiKey with the world, by checking the value back in github).
 
 wait 2 min and then do the endpoint test. Your service should be up and running and
 do so even after restart.
+
+##### Deployment of Monitoring UI Kit (promethes / grafana)
+
+Optional, if you want them on the Pi too, and don't have them running already elsewere:
+
+    ansible-playbook -i hosts deployMoniotoring.yml
+
+After that you should see some more services running at you pi:
+
+* Prometheus:  http://cody:9090/targets?search=
+* Grafana:     http://cody:3000/
 
 ## Sensor-Endpoint
 

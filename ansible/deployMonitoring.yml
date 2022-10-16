@@ -2,6 +2,60 @@
   vars_files:
     - ./group_vars/atlantis.yml
   tasks:
+    - name: Create NodeExporter User
+      user:
+        name: nodeexporter
+        create_home: false
+        shell: /usr/sbin/nologin
+        comment: "nodeexporter Service Account, no login possible."
+        expires: -1
+    - name: Create nodeexporter directory
+      file:
+        path: /var/nodeexporter
+        state: directory
+        owner: nodeexporter
+        group: nodeexporter
+    - name: Fetch nodeexporter version 1.4.0
+      # 64 Bit Version
+      #      command: wget https://github.com/prometheus/node_exporter/releases/download/v1.4.0/node_exporter-1.4.0.linux-arm64.tar.gz
+      # 32 Bit Version
+      command: wget https://github.com/prometheus/node_exporter/releases/download/v1.4.0/node_exporter-1.4.0.linux-armv7.tar.gz
+      args:
+        chdir: /var/nodeexporter
+    - name: Unpack nodeexporter version
+      # 64 Bit Version
+      #      command: tar -xzf node_exporter-1.4.0.linux-arm64.tar.gz --strip-components=1
+      # 32 Bit Version
+      command: tar -xzf node_exporter-1.4.0.linux-armv7.tar.gz --strip-components=1
+      args:
+        chdir: /var/nodeexporter
+    - name: Cleanup old files
+      # 64 Bit Version
+      # file: path=/var/nodeexporter/node_exporter-1.4.0.linux-arm64.tar.gz state=absent
+      # 32 Bit Version
+      file: path=/var/nodeexporter/node_exporter-1.4.0.linux-armv7.tar.gz state=absent
+    - name: fix ownership of all files in /var/nodeexporter
+      command: chown -R nodeexporter:nodeexporter nodeexporter
+      args:
+        chdir: /var
+    - name: Copy systemd service file to server
+      copy:
+        src: nodeexporter.service
+        dest: /etc/systemd/system/nodeexporter.service
+        owner: root
+        group: root
+    - name: enforce deamon config reload
+      command: systemctl daemon-reload
+    - name: Enable service nodeexporter and ensure it is not masked
+      systemd:
+        name: nodeexporter
+        enabled: yes
+        masked: no
+      async: 120
+    - name: Start nodeexporter service
+      systemd:
+        name: nodeexporter
+        state: restarted
     - name: Create prometheus User
       user:
         name: prometheus
