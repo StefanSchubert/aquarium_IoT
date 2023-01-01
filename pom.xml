@@ -8,7 +8,7 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.2</version>
+        <version>3.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,11 +42,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <lombok.version>1.18.24</lombok.version>
-        <micrometer.prometheus.version>1.10.0-M4</micrometer.prometheus.version>
-        <owasp.plugin.version>7.1.2</owasp.plugin.version>
-        <maven.versions.plugin.version>2.11.0</maven.versions.plugin.version>
+        <micrometer.prometheus.version>1.10.2</micrometer.prometheus.version>
+        <owasp.plugin.version>7.4.3</owasp.plugin.version>
     </properties>
 
     <dependencies>
@@ -162,7 +161,6 @@
                      controlled by version property variables -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>${maven.versions.plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>

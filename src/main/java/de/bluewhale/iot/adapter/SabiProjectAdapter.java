@@ -76,7 +76,7 @@ public class SabiProjectAdapter {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(sabiTemperatureRestEndpointURI, requestEntity, String.class);
 
         if (responseEntity != null && !responseEntity.getStatusCode().is2xxSuccessful()) {
-            log.error("Couldn't reach SABIs backend! " + (requestEntity == null ? "Empty Response!" : responseEntity.getStatusCode().getReasonPhrase()));
+            log.error("Couldn't reach SABIs backend! " + (requestEntity == null ? "Empty Response!" : responseEntity.getStatusCode().toString()));
         }
 
     }
