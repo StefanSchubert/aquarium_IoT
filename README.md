@@ -1,7 +1,11 @@
-# Welcome to my little raspery pi aquarium IoT project.
+# Welcome to my little raspberry pi aquarium IoT project.
+
+
+[![CodeQL](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/codeql-analysis.yml)
+[![Java CI with Maven](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/maven.yml/badge.svg)](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/maven.yml)
 
 This project contains a java application which 
-is designed to work on a rasperrypi and to read 
+is designed to work on a raspberryPi and to read 
 connected sensor data to provide them via a small
 microservice in prometheus way.
 
@@ -176,7 +180,7 @@ Tell your microservice which file to use to access your sensor
 
 Notice the file exists twice
 
-ansible/application.properties is the one wich will be used on the pi 
+ansible/application.properties is the one which will be used on the pi 
 src/main/resources/application.properties will be taken on local deployment in you IDE.
 
     # Each sensor has it's own device ID. You will find it as sub-folder here: /sys/bus/w1/devices
@@ -215,6 +219,32 @@ As the temperature won't change so fast, a scrape interval of
 
 Simple copy paste this as json export to got a simple dashboard 
 for the sensor: assets/grafanaBoard.json
+
+## SABI-Project Connector (optional)
+
+For those who do participate in the SABI-Project (see https://sabi-project.net on ipv6 networks | project description: https://github.com/StefanSchubert/sabi#readme )
+you can connect your raspi to your SABI account, by just generating and API key from your tank editor:
+![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/SABI_API_Key_Generation.png)
+
+and add that key in your ansible/application.properties (see configuration below)
+
+    # Integration to SABI
+    # PRECONDITION: Sabi is only available within ipv6, so your pi and isp should have ipv6 connectivity
+    # The temperature readout will be submitted to a SABI REST endpoint
+    # Your require to have a login in SABI and to create an API-Key from your tank listing
+    # paste your API KEY in here. Your may also want to configure the report rate
+    # Notice that SABI accepts measurements only if at least one hour to last report have been past.
+    sabi.support.enabled=false
+    sabi.tank.temperature.api-key=<YOUR API KEY>
+    # every x hours (absolute values required no fraction / default is 4 hours)
+    sabi.tank.temperature.reportrate=1
+    sabi.temperature.api.endpoint=https://api.sabi-project.net:8080/api/aquarium_iot/temp_measurement
+
+That way you have your measurements not only in your local grafana/prometheus setup,
+but also shared/visible in the SABI-Project:
+
+![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/SABI_Reporting.png)
+
 
  
 
