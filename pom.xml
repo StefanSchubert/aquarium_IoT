@@ -8,7 +8,7 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -18,7 +18,7 @@
 
     <packaging>jar</packaging>
     <description>
-        Small behavioral REST Application to be run on a rasperryPI
+        Small behavioral REST Application to be run on a raspberryPI
         Purpose: reading sensor data connected to the PI.
     </description>
 
@@ -43,9 +43,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <lombok.version>1.18.24</lombok.version>
-        <micrometer.prometheus.version>1.10.2</micrometer.prometheus.version>
-        <owasp.plugin.version>7.4.3</owasp.plugin.version>
+        <lombok.version>1.18.28</lombok.version>
+        <micrometer.prometheus.version>1.11.2</micrometer.prometheus.version>
+        <owasp.plugin.version>8.3.1</owasp.plugin.version>
     </properties>
 
     <dependencies>
