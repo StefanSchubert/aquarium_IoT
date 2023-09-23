@@ -8,7 +8,7 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.1</version>
+        <version>3.1.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,10 +42,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
-        <lombok.version>1.18.28</lombok.version>
-        <micrometer.prometheus.version>1.11.2</micrometer.prometheus.version>
-        <owasp.plugin.version>8.3.1</owasp.plugin.version>
+        <java.version>21</java.version>
+        <lombok.version>1.18.30</lombok.version>
+        <micrometer.prometheus.version>1.11.5</micrometer.prometheus.version>
+        <owasp.plugin.version>8.4.2</owasp.plugin.version>
     </properties>
 
     <dependencies>

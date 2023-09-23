@@ -78,8 +78,12 @@ Install some additional packages
     # and that your local user can read them on the console using mutt
     sudo apt-get install mutt
      
-    # Java17 which is required to run our microservice
-    sudo apt-get install openjdk-17-jre-headless
+    # Install Java using sdkman which is required to run our microservices
+    curl -s "https://get.sdkman.io" bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install java <tab to see selection - Choose a 21 variant>
+
+    sudo ln -sf /home/pi/.sdkman/candidates/java/current/bin/java /usr/bin/java
 
 Create a own user for our microservice
 
@@ -100,7 +104,7 @@ you provided via raspi-config.
 
 #### Build steps
 
-Easy - to build the project you need java 11 and maven.
+Easy - to build the project you need java 21 and maven.
 do a 
 
     mvn clean package 
