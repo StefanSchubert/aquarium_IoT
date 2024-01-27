@@ -102,14 +102,27 @@ you provided via raspi-config.
 
 ### Build and deploy the microservice on the pi
 
+
 #### Build steps
 
-Easy - to build the project you need java 21 and maven.
-do a 
+##### Preconditions
+
+* You have a JDK21 and current Maven installed
+* You have docker installed on your machine, and you know docker usage fairly well.
+* As we are using the org.owasp dependency check you will required to register yourself at https://nvd.nist.gov/
+  to get an API-KEY, which you can store in the properties section of your local settings.xml like this:
+
+        <properties>
+            <nvd.api.key>YOUR_API_KEY</nvd.api.key>
+        </properties>
+
+##### Build the project
+
+Easy - as you have maven installed a 
 
     mvn clean package 
 
-and keep the target/aquametric-1.0-SNAPSHOT.jar
+will do the trick. Afterwards you will find the target/aquametric-1.0-SNAPSHOT.jar
 
 #### Deploy the version onto the pi via ansible
 
@@ -138,7 +151,6 @@ or check the unattended update logs
 
 Build the new aquametrics release and then from the ansible dir
 
-
 (For your local copy only: edit deployAquaMetricsService.yml lookup the section with application.properties
 and uncomment the section to become active. I have spared the section out, because I won't share
 my sabi ApiKey with the world, by checking the value back in github).
@@ -148,7 +160,7 @@ my sabi ApiKey with the world, by checking the value back in github).
 wait 2 min and then do the endpoint test. Your service should be up and running and
 do so even after restart.
 
-##### Deployment of Monitoring UI Kit (promethes / grafana)
+##### Deployment of Monitoring UI Kit (prometheus / grafana)
 
 Optional, if you want them on the Pi too, and don't have them running already elsewere:
 
@@ -184,7 +196,7 @@ Tell your microservice which file to use to access your sensor
 
 Notice the file exists twice
 
-ansible/application.properties is the one which will be used on the pi 
+ansible/application.properties is the one which will be used on the pi while
 src/main/resources/application.properties will be taken on local deployment in you IDE.
 
     # Each sensor has it's own device ID. You will find it as sub-folder here: /sys/bus/w1/devices

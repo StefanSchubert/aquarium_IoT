@@ -8,7 +8,7 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -44,8 +44,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
         <lombok.version>1.18.30</lombok.version>
-        <micrometer.prometheus.version>1.11.5</micrometer.prometheus.version>
-        <owasp.plugin.version>8.4.2</owasp.plugin.version>
+        <micrometer.prometheus.version>1.12.2</micrometer.prometheus.version>
+        <owasp.plugin.version>9.0.9</owasp.plugin.version>
     </properties>
 
     <dependencies>
@@ -147,6 +147,12 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${owasp.plugin.version}</version>
+                <configuration>
+                    <!-- You need to register yourself at https://nvd.nist.gov/
+                         to get an API-KEY, which you can store in the
+                         properties section of your local settings.xml -->
+                    <nvdApiKey>${nvd.api.key}</nvdApiKey>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>verify</phase>

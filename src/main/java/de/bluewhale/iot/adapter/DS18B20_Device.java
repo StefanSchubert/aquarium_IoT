@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 /**
  * This class attempts to access a DS1B20 sensor, reads the temperature and provides it as prometheus gauge-style value.
- * Needs your rasperry pi and sensor up and running (see Readme.md) and the corresponding deviceID written in the
+ * Needs your raspberry pi and sensor up and running (see Readme.md) and the corresponding deviceID written in the
  * application.properties.
  */
 public class DS18B20_Device {
@@ -32,6 +32,9 @@ public class DS18B20_Device {
     @Value("${ds18b20.device.id}")
     String sensorDevice;
 
+    @Value("${ds18b20.device.calibration.offset:0.0}")
+    Double calibrationOffset;
+
     public String getTemperatureMeasurementInPrometheusStyle() {
 
         Path path = FileSystems.getDefault().getPath(DEVICE_PATH, sensorDevice, VALUE_READOUT_FILE);
@@ -40,7 +43,7 @@ public class DS18B20_Device {
         long measureRequestElapsedTimeInMS;
 
         Instant start = Instant.now();
-        temperatureInCelcius = getConreateTemperatueValueInCelsius();
+        temperatureInCelcius = getConreateTemperatueValueInCelsius() + calibrationOffset;
         Instant measureTaken = Instant.now();
         measureRequestElapsedTimeInMS = Duration.between(start, measureTaken).toMillis();
 
