@@ -254,7 +254,7 @@ and add that key in your ansible/application.properties (see configuration below
     sabi.tank.temperature.api-key=<YOUR API KEY>
     # every x hours (absolute values required no fraction / default is 4 hours)
     sabi.tank.temperature.reportrate=1
-    sabi.temperature.api.endpoint=https://api.sabi-project.net:8080/api/aquarium_iot/temp_measurement
+    sabi.temperature.api.endpoint=https://api.sabi-project.net/sabi/api/aquarium_iot/temp_measurement
 
 That way you have your measurements not only in your local grafana/prometheus setup,
 but also shared/visible in the SABI-Project:
