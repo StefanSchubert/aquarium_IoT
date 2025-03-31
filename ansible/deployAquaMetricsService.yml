@@ -47,6 +47,9 @@
 #        owner: aquametric
 #        group: aquametric
 #        mode: '0640'
+    - name: Reload systemd daemon to apply changes
+      systemd:
+        daemon_reload: yes
     - name: Enable service aquametric and ensure it is not masked
       systemd:
         name: aquametric

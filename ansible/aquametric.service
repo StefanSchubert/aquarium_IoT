@@ -6,8 +6,12 @@ After=network-online.target
 [Service]
 User=aquametric
 Restart=on-failure
+WorkingDirectory=/var/aquametric/
+Environment="JAVA_HOME=/var/aquametric/.sdkman/candidates/java/current"
+Environment="PATH=/var/aquametric/.sdkman/candidates/java/current/bin:/usr/bin:/bin"
+# ExecStart=/var/aquametric/aquametric-service.jar
+ExecStart=/bin/bash -c 'echo JAVA_HOME=$JAVA_HOME; echo PATH=$PATH; java -version; /var/aquametric/aquametric-service.jar'
 
-ExecStart=/var/aquametric/aquametric-service.jar
 
 [Install]
 WantedBy=multi-user.target

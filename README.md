@@ -78,18 +78,18 @@ Install some additional packages
     # and that your local user can read them on the console using mutt
     sudo apt-get install mutt
      
+    # Create a own user for our microservice
+    
+        sudo adduser --home /var/aquametric --shell /usr/sbin/nologin aquametric
+    
+    choose an arbitrary password and name like "aqua computer" when prompted and leave the rest as default.
+
     # Install Java using sdkman which is required to run our microservices
+
+    sudo -u aquametric bash 
     curl -s "https://get.sdkman.io" bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
     sdk install java <tab to see selection - Choose a 21 variant>
-
-    sudo ln -sf /home/pi/.sdkman/candidates/java/current/bin/java /usr/bin/java
-
-Create a own user for our microservice
-
-    sudo adduser --home /var/aquametric --shell /usr/sbin/nologin aquametric
-
-choose an arbitrary password and name like "aqua computer" when prompted and leave the rest as default.
 
 Do a 
 
