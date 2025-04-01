@@ -64,8 +64,18 @@ Configure unattended upgrades for security
 The editor pops up, clear all an insert this:
 
     Unattended-Upgrade::Origins-Pattern {
-            "origin=Raspbian,codename=${distro_codename},label=Raspbian";
-            "origin=Raspberry Pi Foundation,codename=${distro_codename},label=Raspberry Pi Foundation";
+      // Debian-Sicherheitsupdates
+      "origin=Debian,codename=${distro_codename},label=Debian-Security";
+      "origin=Debian,codename=${distro_codename}-security,label=Debian-Security";
+
+      // Stabile Debian-Pakete
+      "origin=Debian,codename=${distro_codename},label=Debian";
+      "origin=Debian,codename=${distro_codename}-updates,label=Debian";
+
+      // Raspberry Pi OS (Raspbian) Pakete
+      "origin=Raspbian,codename=${distro_codename},label=Raspbian";
+      // Raspberry Pi Foundation Pakete (Firmware, Kernel etc.)
+      "origin=Raspberry Pi Foundation,codename=${distro_codename},label=Raspberry Pi Foundation";
     };
        
     Unattended-Upgrade::Mail "pi";
