@@ -2,11 +2,15 @@
   vars_files:
     - ./group_vars/atlantis.yml
   tasks:
-    - name: Adding existing user "aquametric" to group video for being able to use vcgencmd
+    - name: Create aquametric User if not exists already
       user:
         name: aquametric
-        groups: video
-        append: yes
+        state: present
+        create_home: true
+        home: /var/aquametric
+        shell: /usr/sbin/nologin
+        comment: "aquametric Service Account, no login possible."
+        expires: -1
     - name: Create aquametric directory
       file:
         path: /var/aquametric

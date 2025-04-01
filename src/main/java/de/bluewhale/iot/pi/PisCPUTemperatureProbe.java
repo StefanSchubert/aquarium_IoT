@@ -19,18 +19,15 @@ import java.io.InputStreamReader;
  * as if the pi exceeds its operation specification
  * of -40°C to +85°C the cpu will be throttled and
  * yor services will stop from running smooth.
- * If so so need to consider adding a fan to your setup.
+ * If so you need to consider adding a fan to your setup.
  *
  * @author Stefan Schubert
  */
 @Slf4j
 public class PisCPUTemperatureProbe implements MeterBinder {
 
-    static final String GPU_Temp_CMD = "/opt/vc/bin/vcgencmd measure_temp";
-    static final String GPU_RESULT_REGEXP = "[=']";
-
     // result is required to be divided by 1000
-    static final String CPU_Temp_CMD = "cat /sys/class/thermal/thermal_zone0/temp";
+    static final String CPU_Temp_CMD = "cat /sys/class/hwmon/hwmon0/temp1_input";
 
     @Override
     public void bindTo(MeterRegistry meterRegistry) {
@@ -40,10 +37,6 @@ public class PisCPUTemperatureProbe implements MeterBinder {
                 .baseUnit("°C")
                 .register(meterRegistry);
 
-        Gauge.builder("GPU_Temperature", this, value -> readGpuTemperature())
-                .description("PIs GPU temperature. Normal operation range is within -40°C to +85°C")
-                .baseUnit("°C")
-                .register(meterRegistry);
     }
 
     private double readCpuTemperature() {
@@ -73,37 +66,4 @@ public class PisCPUTemperatureProbe implements MeterBinder {
         return tempValue;
     }
 
-
-    /**
-     * NOTICE: Requires that the running user is part of the video group. Good-Practise: Ensure this via ansible script.
-     * @return GPU Temperature from your pi - assuming your pis location settings point to metric area with Celsius
-     */
-    private double readGpuTemperature() {
-        Double tempValue = 0d;
-        String line = "N/A";
-        try {
-            Process process = Runtime.getRuntime().exec(GPU_Temp_CMD);
-            int exitValue = process.waitFor(); // Wait until call has been finished.
-            if (exitValue != 0) {
-                log.warn("Abnormal process termination for: {}",GPU_Temp_CMD);
-                log.warn("ExitValue was {} and processinfo: {}", exitValue, process.info());
-                return tempValue;
-            }
-
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            while ((line = reader.readLine()) != null) {
-                log.info("PIs GPU-Temperature readout: {}", line);
-                String[] token = line.split(GPU_RESULT_REGEXP);
-                tempValue = Double.valueOf(token[1]);
-            }
-            reader.close();
-
-        } catch (Exception e) {
-            log.warn("Could not access or parse GPU Temperature from result line: {}", line);
-            e.printStackTrace();
-        }
-        return tempValue;
-    }
 }

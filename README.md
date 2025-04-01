@@ -30,6 +30,8 @@ of work and know what you are doing and how to secure your setup. Meaning I take
 
 ### Base-Setup
 
+(Tested with Raspbian Lite 11 (bullseye) and 12 (bookworm))
+
 Burn a SD Card (16GB) with the latest Raspbian (CLI-Edition, no Desktop)
 Connect the pi to a lan cable (only temporarily), hdmi, keyboard
 
