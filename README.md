@@ -180,8 +180,8 @@ Optional, if you want them on the Pi too, and don't have them running already el
 
 After that you should see some more services running at you pi:
 
-* Prometheus:  http://cody:9090/targets?search=
-* Grafana:     http://cody:3000/
+* Prometheus:  http://atlantis:9090/targets?search=
+* Grafana:     http://atlantis:3000/
 
 ## Sensor-Endpoint
 
