@@ -99,7 +99,7 @@ Install some additional packages
     # Install Java using sdkman which is required to run our microservices
 
     sudo -u aquametric bash 
-    curl -s "https://get.sdkman.io" bash
+    curl -s "https://get.sdkman.io" | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
     sdk install java <tab to see selection - Choose a 21 variant>
 
