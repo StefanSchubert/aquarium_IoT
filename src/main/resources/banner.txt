@@ -1,0 +1,11 @@
++------------------+             __________________________
+|    AQUAMETRIC    |            |~~~~~~~~~~~~~~~~~~~~~~~~~~|
+|                  |            |           ><(((°>        |
+|   Raspberry Pi   |============|=[TEMP]                   |
+|                  |            |      o     o             |
++------------------+            |    /\       /\           |
+                                |___/__\_____/__\__________|
+
+Aquarium-IoT: ${build.version}
+Built:        ${build.time}
+Spring-Boot:  ${spring-boot.formatted-version} 🚀

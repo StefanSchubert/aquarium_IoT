@@ -5,8 +5,6 @@
 
 package de.bluewhale.iot.adapter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.bluewhale.iot.adapter.model.IoTMeasurementTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -67,7 +67,7 @@ public class SabiProjectAdapter {
         String jsonPayload = null;
         try {
             jsonPayload = objectMapper.writeValueAsString(ioTMeasurementTo);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             log.error("Could not build TO! Reported nothing.", e);
             return;
         }

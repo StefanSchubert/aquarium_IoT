@@ -26,7 +26,7 @@
     - name: Copy systemd service file to server
       copy:
         src: aquametric.service
-        dest: /etc/systemd/system
+        dest: /etc/systemd/system/aquametric.service
         owner: root
         group: root
     - name: Copy new jar file

@@ -1,24 +1,24 @@
 # Welcome to my little raspberry pi aquarium IoT project.
 
-
 [![CodeQL](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/codeql-analysis.yml)
 [![Java CI with Maven](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/maven.yml/badge.svg)](https://github.com/StefanSchubert/aquarium_IoT/actions/workflows/maven.yml)
 
-This project contains a java application which 
-is designed to work on a raspberryPi and to read 
+This project contains a java application which
+is designed to work on a raspberryPi and to read
 connected sensor data to provide them via a small
 microservice in prometheus way.
 
 Thus a prometheus instance can collect the data and you
 will be able to display and analyse it via grafana.
 
-**WARNING:** Having open electric circuits near saltwater can be potentially dangerous. Do not follow this setup unless you are experienced with this type
-of work and know what you are doing and how to secure your setup. Meaning I take no responsibility or liability of your work.
+**WARNING:** Having open electric circuits near saltwater can be potentially dangerous. Do not follow this setup unless
+you are experienced with this type
+of work and know what you are doing and how to secure your setup. Meaning I take no responsibility or liability of your
+work.
 
 ## Rasperry Pi Setup
 
 ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Components.png)
-
 
 | Preview | Remark |
 |---|---|
@@ -27,10 +27,9 @@ of work and know what you are doing and how to secure your setup. Meaning I take
 | ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/Finished.png) | This is the result. Meanwhile up and running :-) |
 | ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/grafanaBoard.png) | And this is what it looks like with a simple grafana board displaying the values. By the way I'm using grafana to **set threshhold and email alerting**. | 
 
-
 ### Base-Setup
 
-(Tested with Raspbian Lite 11 (bullseye) and 12 (bookworm))
+(Tested with Raspbian Lite 11(bullseye), 12 (bookworm), 13 (trixie)
 
 Burn a SD Card (16GB) with the latest Raspbian (CLI-Edition, no Desktop)
 Connect the pi to a lan cable (only temporarily), hdmi, keyboard
@@ -38,15 +37,15 @@ Connect the pi to a lan cable (only temporarily), hdmi, keyboard
 * Connect to atlantis with default credentials (pi/raspberry)
 
       sudo raspi-config
-  
-  * Choose a hostname (for this sample atlantis)
-  * Change login credentials
-  * Activate SSH network service
-  * Configure locale, keyboard, timezone 
-  * Configure WLAN
-  * In Interface Options: activate the 1-wire protocol
-    
-Upgrade the system 
+
+    * Choose a hostname (for this sample atlantis)
+    * Change login credentials
+    * Activate SSH network service
+    * Configure locale, keyboard, timezone
+    * Configure WLAN
+    * Important: In Interface Options: activate the 1-wire protocol
+
+Upgrade the system
 
     sudo apt-get update
     sudo apt-get upgrade
@@ -96,32 +95,29 @@ Install some additional packages
     
     choose an arbitrary password and name like "aqua computer" when prompted and leave the rest as default.
 
-    # Install Java using sdkman which is required to run our microservices
+    # Install Java a java JRE which is required to run our microservices
 
     sudo -u aquametric bash 
-    curl -s "https://get.sdkman.io" | bash
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
-    sdk install java <tab to see selection - Choose a 21 variant>
+    sudo apt install openjdk-25-jre    
 
-Do a 
+Do a
 
     sudo shutdown -r now
-    
-and disconnect the Pi from the LAN. 
+
+and disconnect the Pi from the LAN.
 After 2min you should be able to ssh into the pi via WLAN.
-If noit reconnect the LAN cable and check the WLAN settings
+If no reconnect the LAN cable and check the WLAN settings
 you provided via raspi-config.
 
 ### Build and deploy the microservice on the pi
-
 
 #### Build steps
 
 ##### Preconditions
 
-* You have a JDK21 and current Maven installed
+* You have a JDK25 and current Maven installed
 * You have docker installed on your machine, and you know docker usage fairly well.
-* As we are using the org.owasp dependency check you will required to register yourself at https://nvd.nist.gov/
+* As we are using the org.owasp dependency check you will be required to register yourself at https://nvd.nist.gov/
   to get an API-KEY, which you can store in the properties section of your local settings.xml like this:
 
         <properties>
@@ -130,23 +126,23 @@ you provided via raspi-config.
 
 ##### Build the project
 
-Easy - as you have maven installed a 
+Easy - as you have maven installed a
 
     mvn clean package 
 
-will do the trick. Afterwards you will find the target/aquametric-1.0-SNAPSHOT.jar
+will do the trick. Afterward you will find the target/aquametric-1.0-SNAPSHOT.jar
 
 #### Deploy the version onto the pi via ansible
 
 The deployment via ansible on single rasperry-pi's is like using a sledgehammer to crack a nut,
-it is unsuitable here but I had it already a blueprint so it was easy to adopt.
+it is unsuitable here, but I had it already a blueprint so it was easy to adopt.
 
 ##### Preconditions to use this deployment procedure
 
 * Ansible and ssh are available
 * The ssh private key of the executing user has been published onto the 'pi' account.
 * You have edited the application.properties value for "ds18b20.device.id"
-* You have edited the ansible/hosts file containing the hostname of yor target pi (if you changed it) 
+* You have edited the ansible/hosts file containing the hostname of yor target pi (if you changed it)
 
 ###### Examples
 
@@ -157,7 +153,6 @@ _Execute something on all pis_
 or check the unattended update logs
 
 	ansible aquapis -i hosts -u pi -a "tail -n20 /var/log/unattended-upgrades/unattended-upgrades.log"
-
 
 ##### Deployment of Monitoring Endpoint
 
@@ -192,13 +187,13 @@ but you are free to use your own design for the wiring with
 the material available ;-)
 ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/DS18B20CircuitBoardLayout.png)
 
-I built the pi DS18B20 circuit board layout following 
+I built the pi DS18B20 circuit board layout following
 the wiring schema as seen from the tutorial here: http://tuxgraphics.org/npa/raspberry-pi-ds18s20-temperature-sensor/
 The test readout from the tutoral mentioned above should be working before continuing.
 
 Above tutorial uses some perl programming, which seems quite effective.
 Being familiar with java I chosed to write a small java microservice
-using spring-boot.  
+using spring-boot.
 
 #### Configuration
 
@@ -214,7 +209,7 @@ src/main/resources/application.properties will be taken on local deployment in y
     # Each sensor has it's own device ID. You will find it as sub-folder here: /sys/bus/w1/devices
     ds18b20.device.id=28-0319a2795781
 
-##### Endpoint test 
+##### Endpoint test
 
     curl http://localhost:8080/sensor/temp/ds18b20
     
@@ -223,7 +218,7 @@ src/main/resources/application.properties will be taken on local deployment in y
     # duration of measurement in millis
     aqua_measure_duration{sensor="28-0319a2795781"} 3
 
-That's it :-) 
+That's it :-)
 
 ##### Prometheus / Grafana Config
 
@@ -245,12 +240,13 @@ As the temperature won't change so fast, a scrape interval of
 
 ###### Sample Grafana Board
 
-Simple copy paste this as json export to got a simple dashboard 
+Simple copy paste this as json export to got a simple dashboard
 for the sensor: assets/grafanaBoard.json
 
 ## SABI-Project Connector (optional)
 
-For those who do participate in the SABI-Project (see https://sabi-project.net on ipv6 networks | project description: https://github.com/StefanSchubert/sabi#readme )
+For those who do participate in the SABI-Project (see https://sabi-project.net on ipv6 networks | project
+description: https://github.com/StefanSchubert/sabi#readme )
 you can connect your raspi to your SABI account, by just generating and API key from your tank editor:
 ![](https://raw.githubusercontent.com/StefanSchubert/aquarium_IoT/main/assets/SABI_API_Key_Generation.png)
 

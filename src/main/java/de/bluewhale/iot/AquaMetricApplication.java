@@ -4,12 +4,12 @@
  */
 package de.bluewhale.iot;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@EnableCaching
 @EnableScheduling
 @SpringBootApplication
 public class AquaMetricApplication {
@@ -17,4 +17,13 @@ public class AquaMetricApplication {
     public static void main(String[] args) {
         SpringApplication.run(AquaMetricApplication.class, args);
     }
+
+    @Autowired(required = false)
+    private org.springframework.boot.info.BuildProperties buildProperties;
+
+    @PostConstruct
+    public void check() {
+        System.out.println("BuildProperties bean = " + buildProperties);
+    }
+
 }
