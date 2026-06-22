@@ -43,7 +43,7 @@ public class DS18B20_Device {
         long measureRequestElapsedTimeInMS;
 
         Instant start = Instant.now();
-        temperatureInCelcius = getConreateTemperatueValueInCelsius() + calibrationOffset;
+        temperatureInCelcius = getConreateTemperatueValueInCelsius();
         Instant measureTaken = Instant.now();
         measureRequestElapsedTimeInMS = Duration.between(start, measureTaken).toMillis();
 
@@ -85,6 +85,9 @@ public class DS18B20_Device {
             }
             circuitBreaker++;
         }
+
+        // Apply calibration correction.
+        temperatureInCelcius = temperatureInCelcius + calibrationOffset;
 
         log.debug(String.format("Temperature readout: %s °C having %d attempts.",
                 temperatureInCelcius, circuitBreaker--));
