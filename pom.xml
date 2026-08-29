@@ -8,7 +8,7 @@
         <!-- Taking care to have all spring dependencies right. -->
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.0</version>
+        <version>4.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -45,7 +45,7 @@
         <java.version>25</java.version>
         <lombok.version>1.18.46</lombok.version>
         <micrometer.prometheus.version>1.17.0</micrometer.prometheus.version>
-        <owasp.plugin.version>12.2.2</owasp.plugin.version>
+        <owasp.plugin.version>13.0.0</owasp.plugin.version>
     </properties>
 
     <dependencies>
