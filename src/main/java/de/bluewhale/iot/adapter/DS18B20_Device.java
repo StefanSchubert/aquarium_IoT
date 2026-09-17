@@ -81,7 +81,7 @@ public class DS18B20_Device {
                 break;
             } catch (Exception e) {
                 log.error("Sensor readout failed on " + circuitBreaker + ". attempt. Reason: {}",e.getCause());
-                // sensor value will stick to 0 if we are not successful in the end.
+                // sensor value will stick to calibration-offset if we are not successful in the end.
             }
             circuitBreaker++;
         }

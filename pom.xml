@@ -43,7 +43,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>25</java.version>
-        <lombok.version>1.18.46</lombok.version>
+        <lombok.version>1.18.48</lombok.version>
         <micrometer.prometheus.version>1.17.0</micrometer.prometheus.version>
         <owasp.plugin.version>13.0.0</owasp.plugin.version>
     </properties>
